@@ -50,7 +50,6 @@ func (p profiles) ToConsole() {
 }
 
 // sort
-
 func (p profiles) Len() int {
 	return len(p)
 }
@@ -126,5 +125,11 @@ func main() {
 	})
 
 	fmt.Println(f5)
+
+	f6 := funk.Map(payload, func(p profile) int {
+		return p.Age
+	})
+
+	fmt.Println(f6)
 
 }
