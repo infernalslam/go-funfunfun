@@ -132,4 +132,14 @@ func main() {
 
 	fmt.Println(f6)
 
+	type resp struct {
+		Name string
+		Age  int
+	}
+	f7 := funk.Map(payload, func(p profile) resp {
+		return resp{Name: p.Name, Age: p.Age}
+	})
+
+	fmt.Println(f7)
+
 }
