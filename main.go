@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"sort"
+)
 
 type profile struct {
 	Name    string
@@ -33,7 +36,6 @@ func (p profiles) Filter(f func(p profile) bool) (prof profiles) {
 func (p profiles) Map(f func(p profile) int) []int {
 	ages := make([]int, len(p))
 	for i, val := range p {
-		fmt.Println(f(val), i)
 		ages[i] = f(val)
 	}
 	return ages
@@ -44,6 +46,20 @@ func (p profiles) ToConsole() {
 		str := fmt.Sprintf("%s %s %d", val.Name, val.Surname, val.Age)
 		fmt.Println(str)
 	}
+}
+
+// sort
+
+func (p profiles) Len() int {
+	return len(p)
+}
+
+func (p profiles) Swap(i, j int) {
+	p[i], p[j] = p[j], p[i]
+}
+
+func (p profiles) Less(i, j int) bool {
+	return p[i].Age < p[j].Age
 }
 
 func main() {
@@ -70,5 +86,12 @@ func main() {
 
 	fmt.Println(resp1)
 	fmt.Println(resp2)
+
+	sort.Sort(payload)
+	t := payload.Map(func(p profile) int {
+		return p.Age
+	})
+
+	fmt.Println(t)
 
 }
