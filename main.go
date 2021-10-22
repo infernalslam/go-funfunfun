@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"sort"
+
+	"github.com/thoas/go-funk"
 )
 
 type profile struct {
@@ -74,24 +75,56 @@ func main() {
 		{"T7", "T7", 12},
 	}
 
-	resp1 := payload.Filter(func(p profile) bool {
-		return p.Age >= 21
-	}).Map(func(p profile) int {
-		return p.Age
+	// resp1 := payload.Filter(func(p profile) bool {
+	// 	return p.Age >= 21
+	// }).Map(func(p profile) int {
+	// 	return p.Age
+	// })
+
+	// resp2 := payload.Find(func(p profile) bool {
+	// 	return p.Name == "T3"
+	// })
+
+	// fmt.Println(resp1)
+	// fmt.Println(resp2)
+
+	// sort.Sort(payload)
+	// t := payload.Map(func(p profile) int {
+	// 	return p.Age
+	// })
+
+	// fmt.Println(t)
+
+	t1 := []string{"haha", "baba"}
+	f1 := funk.Contains(t1, "baba")
+	fmt.Println(f1)
+
+	t2 := profile{"test", "naja", 20}
+
+	f2 := funk.Contains([]profile{t2}, t2)
+	fmt.Println(f2)
+
+	mock1 := []profile{
+		{"T1", "naja", 20},
+		{"T4", "naja", 20},
+	}
+	mock2 := []profile{
+		{"T3", "naja", 20},
+		{"T4", "naja", 20},
+	}
+	f3 := funk.Intersect(mock1, mock2)
+	fmt.Println(f3)
+
+	f4 := funk.Find(payload, func(p profile) bool {
+		return p.Name == "T1"
 	})
 
-	resp2 := payload.Find(func(p profile) bool {
-		return p.Name == "T3"
+	fmt.Println(f4)
+
+	f5 := funk.Filter(payload, func(p profile) bool {
+		return p.Age >= 22
 	})
 
-	fmt.Println(resp1)
-	fmt.Println(resp2)
-
-	sort.Sort(payload)
-	t := payload.Map(func(p profile) int {
-		return p.Age
-	})
-
-	fmt.Println(t)
+	fmt.Println(f5)
 
 }
